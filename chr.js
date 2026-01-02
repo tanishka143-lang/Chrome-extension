@@ -1,3 +1,4 @@
+//chrome://extensions/
 // Refactor the code so that it uses .addEventListener()
 // when you click the SAVE INPUT button
 
@@ -8,9 +9,40 @@
 
 //let myLeads = ["www.awesomelead.com","www.epiclead.com","www.greatlead.com"]
 let myLeads = []
+//for turning from string into array
+//myLeads = JSON.parse(myLeads)
+//for turning array into string
+//myLeads = JSON.stringify(myLeads)
+//console.log(typeof myLeads)
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
+
+//localStorage.setItem("myLeads","www.example.com")
+//console.log(localStorage.getItem("myLeads"))
+
+
+//to get the leads back from local storage
+//store it in a variable, leadsFromLocalStorage
+//log out the varaiable
+//store the delete button in a deleteBtn variable
+const deleteBtn = document.getElementById("delete-btn")
+const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"))
+
+//check if leadsFromLocalStorage is  truthy means it has some leads
+//if so , set myLeads to its values and call renderLeads() 
+if(leadsFromLocalStorage){
+    myLeads = leadsFromLocalStorage
+    render(myLeads)
+}
+
+//listen for double click on delete button when clicked clear the local storage
+deleteBtn.addEventListener("dblclick",function(){
+    
+    localStorage.clear()
+    myLeads = []
+    render(myLeads)
+})
 
 inputBtn.addEventListener("click", function() {
     myLeads.push(inputEl.value)
@@ -18,7 +50,11 @@ inputBtn.addEventListener("click", function() {
    //calling renderLeads function
    //clear out the input field after each input
    inputEl.value=""
-   renderLeads()
+   //save the myLeads array to local storage we need to use JSON.stringify as local storage only saves strings  
+   localStorage.setItem("myLeads",JSON.stringify(myLeads))
+   render(myLeads)
+   //to verfy that it works
+   console.log(localStorage.getItem("myLeads"))
 
     
 })
@@ -39,17 +75,19 @@ inputBtn.addEventListener("click", function() {
 //render the listItems inside the unordered list using ulEl.innerHTML 
 
 // secondly after this we have to render the leads inside the click function so that whenever we click the button the leads are rendered   
-function renderLeads(){
+function render(leads){
     let listItems = ""
-    for(let i = 0;i < myLeads.length; i++){
+    for(let i = 0;i < leads.length; i++){
         //now we have to wrap in an anchor tag inside li so that we can make the link open in tab that is clickable
         //listItems += "<li>" + myLeads[i] + "</li>"
       //  listItems += "<li><a target='_blank' href='" + myLeads[i] + "'>" + myLeads[i] + "</a></li>"
         listItems += `<li>
-                         <a target='_blank' href ='${myLeads[i]}'>
-                      ${myLeads[i]}</a>
+                         <a target='_blank' href ='${leads[i]}'>
+                      ${leads[i]}</a>
         </li>`
         console.log(listItems)
     }
     ulEl.innerHTML = listItems
 }
+
+//falsy value in javascipt are false,0,"",null,undefined,NaN 
