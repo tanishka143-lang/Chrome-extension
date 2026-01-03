@@ -37,7 +37,6 @@ if(leadsFromLocalStorage){
     render(myLeads)
 }
 
-
 tabBtn.addEventListener("click",function(){
      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         //console.log(tabs)
@@ -98,11 +97,45 @@ function render(leads){
         listItems += `<li>
                          <a target='_blank' href ='${leads[i]}'>
                       ${leads[i]}</a>
+                      <button class="delete-each-btn" data-index="${i}">
+                    ❌
+                </button>
         </li>`
+
         console.log(listItems)
     }
     ulEl.innerHTML = listItems
 }
 
+ulEl.addEventListener("click", function (e) {
+    if (e.target.classList.contains("delete-each-btn")) {
+        const index = e.target.dataset.index
+
+        myLeads.splice(index, 1)   // delete lead by index
+        localStorage.setItem("myLeads", JSON.stringify(myLeads))
+        render(myLeads)
+    }
+})
+
+
+//RECAPE
 //falsy value in javascipt are false,0,"",null,undefined,NaN 
 //PARAMETER VS ARGUMENT  .. arguments are defined outside the function while calling but oarameters are defined inside the function while defining the function 
+
+//const – Declares a variable that cannot be reassigned.
+
+//addEventListener() Runs code when an event (click, input, etc.) happens.
+
+//innerHTML – Gets or sets HTML content inside an element.
+
+//input.value – Reads or updates the value typed in an input field.
+
+//function parameters – Values passed into a function to use inside it.
+
+//template strings – Strings using backticks `, allow ${} for variables.
+
+//localStorage – Stores data in the browser permanently.
+
+//JSON object – Format to store and exchange data.
+
+//Objects in arrays – Arrays that contain objects as elements.
