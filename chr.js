@@ -28,7 +28,8 @@ const ulEl = document.getElementById("ul-el")
 //store the delete button in a deleteBtn variable
 const deleteBtn = document.getElementById("delete-btn")
 const leadsFromLocalStorage = JSON.parse(localStorage.getItem("myLeads"))
-
+//we have used tab btn to store the link of the current tab automativcally on clicking the button
+const tabBtn=document.getElementById("tab-btn")
 //check if leadsFromLocalStorage is  truthy means it has some leads
 //if so , set myLeads to its values and call renderLeads() 
 if(leadsFromLocalStorage){
@@ -36,6 +37,22 @@ if(leadsFromLocalStorage){
     render(myLeads)
 }
 
+const tabs = [
+    {url: "https://www.linkedin.com/in/per-harald-borgen/"}
+]
+
+tabBtn.addEventListener("click",function(){
+     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        console.log(tabs)
+        // since only one tab should be active and in the current window at once
+    // console.log(tabs[0])
+    myLeads.push(tabs[0].url)
+    localStorage.setItem("myLeads",JSON.stringify(myLeads))
+
+ render(myLeads)})
+    
+    })
+   
 //listen for double click on delete button when clicked clear the local storage
 deleteBtn.addEventListener("dblclick",function(){
     
@@ -91,3 +108,4 @@ function render(leads){
 }
 
 //falsy value in javascipt are false,0,"",null,undefined,NaN 
+//PARAMETER VS ARGUMENT  .. arguments are defined outside the function while calling but oarameters are defined inside the function while defining the function 
