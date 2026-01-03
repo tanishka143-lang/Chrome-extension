@@ -40,7 +40,7 @@ if(leadsFromLocalStorage){
 
 tabBtn.addEventListener("click",function(){
      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        console.log(tabs)
+        //console.log(tabs)
         // since only one tab should be active and in the current window at once
     // console.log(tabs[0])
     myLeads.push(tabs[0].url)
