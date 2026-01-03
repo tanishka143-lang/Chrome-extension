@@ -98,7 +98,7 @@ function render(leads){
                          <a target='_blank' href ='${leads[i]}'>
                       ${leads[i]}</a>
                       <button class="delete-each-btn" data-index="${i}">
-                    ❌
+                    delete
                 </button>
         </li>`
 
